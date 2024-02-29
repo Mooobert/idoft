@@ -25,6 +25,15 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean -B package --file auto-update-dataset/java/pom.xml
+      # TODO: implement running cmds, maybe as follows:
+      # run: mvn clean install -DskipTests -pl typescript-generator-core -am
+      # run: mvn -pl typescript-generator-core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+      # run: mvn -pl typescript-generator-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+      # or maybe
+      # command:
+      # - [first mvn run cmd]
+      # - [next mvn run cmd]
+      # - [last mvn run cmd]
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
