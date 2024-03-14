@@ -16,9 +16,7 @@ jobs:
       with:
         java-version: '8'
         distribution: 'adopt'
-        architecture: 'arm64' 
-        cache: maven
-    - name: Build Maven
+    - name: Build with Maven
       run: mvn clean -B package --file auto-update-dataset/java/pom.xml
     - name: Setup
       run: |
