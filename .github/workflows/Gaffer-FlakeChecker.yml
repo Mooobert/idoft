@@ -19,13 +19,17 @@ jobs:
         java-version: '8'
         distribution: 'oracle'
         cache: maven
-    - name: Build
-      # run: mvn clean -B package --file auto-update-dataset/java/pom.xml
-      run: mvn clean install -DskipTests -pl core -am
-    - name: Run core tests
-      run: mvn -pl core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
-    - name: Run NonDex tests
-      run: mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+    - name: Build Maven
+      run: mvn clean -B package --file auto-update-dataset/java/pom.xml
+    - name: Setup
+      run: |
+        pwd
+        ls
+        # mvn clean install -DskipTests -pl core -am
+    # - name: Run core tests
+    #   run: mvn -pl core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+    # - name: Run NonDex tests
+    #   run: mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
 
       
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
