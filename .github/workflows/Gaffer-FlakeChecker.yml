@@ -1,8 +1,7 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
 
-name: Gaffer Maven core and nondex tester 
-
+name: Gaffer Maven core and NonDex tester 
 on:
   push:
     branches: [ "main" ]
@@ -11,30 +10,24 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 21
+    - name: Set up JDK 8
       uses: actions/setup-java@v3
       with:
-        java-version: '21'
+        java-version: '8'
         distribution: 'oracle'
-        architecture: arm64
         cache: maven
-    - name: Build with Maven
-      run: mvn clean -B package --file auto-update-dataset/java/pom.xml
-      # TODO: implement running cmds, maybe as follows:
-      # run: mvn clean install -DskipTests -pl typescript-generator-core -am
-      # run: mvn -pl typescript-generator-core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
-      # run: mvn -pl typescript-generator-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
-      # or maybe
-      # command:
-      # - [first mvn run cmd]
-      # - [next mvn run cmd]
-      # - [last mvn run cmd]
+    - name: Build
+      # run: mvn clean -B package --file auto-update-dataset/java/pom.xml
+      run: mvn clean install -DskipTests -pl core -am
+    - name: Run core tests
+      run: mvn -pl core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+    - name: Run NonDex tests
+      run: mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
 
+      
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
