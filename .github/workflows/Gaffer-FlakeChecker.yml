@@ -15,21 +15,35 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '8'
-        distribution: 'temurin'
+        distribution: 'adopt'
+        
     - name: Build with Maven
       run: mvn clean -B package --file auto-update-dataset/java/pom.xml
-    - name: Test Setup
+      
+    - name: Clone flaky test Repository
       run: |
-        mkdir test8
-        cd test8
+        cd ~
         git clone https://github.com/gchq/Gaffer
-        cd Gaffer
+        
+    - name: Print latest commit
+      run: |
+        cd ~/Gaffer
         git rev-parse HEAD
+        
+    - name: Install testing dependencies
+      run: |
+        cd ~/Gaffer
         mvn clean install -DskipTests -pl core -am
+        
     - name: Run core tests
-      run: mvn -pl core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+      run: |
+        cd ~/Gaffer
+        mvn -pl core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+        
     - name: Run NonDex tests
-      run: mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+      run: |
+        cd ~/Gaffer
+        mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
 
       
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
