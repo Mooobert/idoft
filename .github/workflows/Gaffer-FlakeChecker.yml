@@ -23,37 +23,27 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        # git clone https://github.com/gchq/Gaffer
-        git clone https://github.com/vojtechhabarta/typescript-generator
-
+        git clone https://github.com/gchq/Gaffer
         
     - name: Print latest commit
       run: |
-        # cd ~/Gaffer
-        cd ~/typescript-generator
+        cd ~/Gaffer
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        # cd ~/Gaffer
-        cd ~/typescript-generator
-        # mvn clean install -DskipTests -pl core -am
-        mvn clean install -DskipTests -pl typescript-generator-core -am
-
+        cd ~/Gaffer
+        mvn clean install -DskipTests -pl core -am
         
     - name: Run core tests
       run: |
-        # cd ~/Gaffer
-        cd ~/typescript-generator
-        # mvn -pl core test -Dtest=uk.gov.gchq.gaffer.commonutil.StreamUtilTest#testOpenStreamsURLNotEmpty
-        mvn -pl typescript-generator-core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+        cd ~/Gaffer
+        mvn -pl core test -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
 
     - name: Run NonDex tests
       run: |
-        # cd ~/Gaffer
-        cd ~/typescript-generator
-        # mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=100 -Dtest=uk.gov.gchq.gaffer.commonutil.StreamUtilTest#testOpenStreamsURLNotEmpty
-        mvn -pl typescript-generator-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+        cd ~/Gaffer
+        mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=10 -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
 
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
