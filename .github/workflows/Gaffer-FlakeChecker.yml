@@ -23,27 +23,36 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        git clone https://github.com/gchq/Gaffer
+        # git clone https://github.com/gchq/Gaffer
+        git clone https://github.com/vojtechhabarta/typescript-generator
+        cd ~/typescript-generator
         
     - name: Print latest commit
       run: |
-        cd ~/Gaffer
+        # cd ~/Gaffer
+        cd ~/typescript-generator
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/Gaffer
-        mvn clean install -DskipTests -pl core -am
+        # cd ~/Gaffer
+        # mvn clean install -DskipTests -pl core -am
+        cd ~/typescript-generator
+        mvn clean install -DskipTests -pl typescript-generator-core -am
         
     - name: Run core tests
       run: |
-        cd ~/Gaffer
-        mvn -pl core test -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
+        # cd ~/Gaffer
+        # mvn -pl core test -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
+        cd ~/typescript-generator
+        mvn -pl typescript-generator-core test -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
 
     - name: Run NonDex tests
       run: |
-        cd ~/Gaffer
-        mvn -X -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=10 -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
+        # cd ~/Gaffer
+        # mvn -X -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=10 -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
+        cd ~/typescript-generator
+        mvn -X -pl typescript-generator-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
 
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
