@@ -14,11 +14,11 @@
   	<dependency>
   		<groupId>org.seleniumhq.selenium</groupId>
   		<artifactId>selenium-java</artifactId>
-  		<version>4.8.3</version>
+  		<version>4.18.1</version>
   	</dependency>
     <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-devtools-v122:4.8.3</artifactId>
+        <artifactId>selenium-devtools-v122</artifactId>
         <version>4.12.1</version>
     </dependency>
   	<dependency>
