@@ -23,27 +23,27 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        git clone https://github.com/baidu/uid-generator
+        git clone https://github.com/cerner/common-kafka
         
     - name: Print latest commit
       run: |
-        cd ~/uid-generator
+        cd ~/common-kafka
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/uid-generator
-        mvn clean install -DskipTests -am
+        cd ~/common-kafka
+        mvn clean install -DskipTests -pl common-kafka -am
         
     - name: Run core tests
       run: |
-        cd ~/uid-generator
-        mvn test -Dtest=com.baidu.fsg.uid.DefaultUidGeneratorTest#testParallelGenerate
+        cd ~/common-kafka
+        mvn -pl common-kafka test -Dtest=com.cerner.common.kafka.consumer.ProcessingKafkaConsumerTest#nextRecord_fairProcessing
 
     - name: Run NonDex tests
       run: |
-        cd ~/uid-generator
-        mvn edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.baidu.fsg.uid.DefaultUidGeneratorTest#testParallelGenerate
+        cd ~/common-kafka
+        mvn -pl common-kafka edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.cerner.common.kafka.consumer.ProcessingKafkaConsumerTest#nextRecord_fairProcessing
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
