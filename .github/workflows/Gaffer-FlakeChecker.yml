@@ -38,14 +38,18 @@ jobs:
     - name: Run core tests
       run: |
         cd ~/pinot
-        mvn -pl pinot-core test -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#testNoRecordsIndexedRowMajorSegmentBuilder
-
+        mvn -pl pinot-core test -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#test10RecordsIndexedRowMajorSegmentBuilder
+        echo "core test 1 run"
+        mvn -pl pinot-core test -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#testNoRecordsIndexedColumnMajorSegmentBuilder
+        echo "core test 2 run"
 
     - name: Run NonDex tests
       run: |
         cd ~/pinot
-        mvn -pl pinot-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=100 -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#testNoRecordsIndexedRowMajorSegmentBuilder
-
+        mvn -pl pinot-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=100 -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#test10RecordsIndexedRowMajorSegmentBuilder
+        echo "nondex 1 run"
+        mvn -pl pinot-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=100 -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#testNoRecordsIndexedColumnMajorSegmentBuilder
+        echo "nondex 2 run"
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
