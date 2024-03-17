@@ -27,22 +27,22 @@ jobs:
         
     - name: Print latest commit
       run: |
-        cd ~/incubator-kie-drools
+        cd ~/distributedlog
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/incubator-kie-drools
+        cd ~/distributedlog
         mvn clean install -DskipTests -pl distributedlog-core -am
         
     - name: Run core tests
       run: |
-        cd ~/incubator-kie-drools
+        cd ~/distributedlog
         mvn -pl distributedlog-core test -Dtest=com.twitter.distributedlog.TestAsyncReaderLock#testReaderLockBackgroundReaderLockAcquire
 
     - name: Run NonDex tests
       run: |
-        cd ~/incubator-kie-drools
+        cd ~/distributedlog
         mvn -pl distributedlog-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.twitter.distributedlog.TestAsyncReaderLock#testReaderLockBackgroundReaderLockAcquire
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
