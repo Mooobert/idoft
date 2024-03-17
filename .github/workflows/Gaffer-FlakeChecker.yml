@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 8
+    - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
-        java-version: '8'
+        java-version: '11'
         distribution: 'adopt'
         
     - name: Build with Maven
@@ -23,27 +23,27 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        git clone https://github.com/cerner/common-kafka
+        git clone https://github.com/wildfly/wildfly
         
     - name: Print latest commit
       run: |
-        cd ~/common-kafka
+        cd ~/wildfly
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/common-kafka
-        mvn clean install -DskipTests -pl common-kafka -am
+        cd ~/wildfly
+        mvn clean install -DskipTests -pl galleon-pack/layer-metadata-tests -am
         
     - name: Run core tests
       run: |
-        cd ~/common-kafka
-        mvn -pl common-kafka test -Dtest=com.cerner.common.kafka.consumer.ProcessingKafkaConsumerTest#nextRecord_fairProcessing
+        cd ~/wildfly
+        mvn -pl galleon-pack/layer-metadata-tests test -Dtest=wildfly.feature.pack.layer.tests.microprofile.telemetry.MicroProfileTelemetryLayerMetaDataTestCase#testClassInSdkCommonPackage
 
     - name: Run NonDex tests
       run: |
-        cd ~/common-kafka
-        mvn -pl common-kafka edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.cerner.common.kafka.consumer.ProcessingKafkaConsumerTest#nextRecord_fairProcessing
+        cd ~/wildfly
+        mvn -pl galleon-pack/layer-metadata-tests edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=wildfly.feature.pack.layer.tests.microprofile.telemetry.MicroProfileTelemetryLayerMetaDataTestCase#testClassInSdkCommonPackage
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
