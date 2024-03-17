@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 11
+    - name: Set up JDK 8
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '8'
         distribution: 'temurin'
         
     - name: Build with Maven
@@ -38,12 +38,12 @@ jobs:
     - name: Run core tests
       run: |
         cd ~/Gaffer
-        mvn -pl core test -Dtest=common-util.src.test.java.uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
+        mvn -pl core test -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
 
     - name: Run NonDex tests
       run: |
         cd ~/Gaffer
-        mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=10 -Dtest=common-util.src.test.java.uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
+        mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=10 -Dtest=uk.gov.gchq.gaffer.commonutil.CollectionUtilTest#shouldConvertMapToStringKeys
 
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
