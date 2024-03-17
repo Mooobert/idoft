@@ -23,27 +23,27 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        git clone https://github.com/wildfly/wildfly
+        git clone https://github.com/soot-oss/soot
         
     - name: Print latest commit
       run: |
-        cd ~/wildfly
+        cd ~/soot
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/wildfly
-        mvn clean install -DskipTests -pl galleon-pack/layer-metadata-tests -am
+        cd ~/soot
+        mvn clean install -DskipTests -am
         
     - name: Run core tests
       run: |
-        cd ~/wildfly
-        mvn -pl galleon-pack/layer-metadata-tests test -Dtest=wildfly.feature.pack.layer.tests.microprofile.telemetry.MicroProfileTelemetryLayerMetaDataTestCase#testClassInSdkCommonPackage
-
+        cd ~/soot
+        mvn test -Dtest=soot.jimple.toolkits.typing.TypingMinimizeTest#testJavaInterfaceTyping
+        
     - name: Run NonDex tests
       run: |
-        cd ~/wildfly
-        mvn -pl galleon-pack/layer-metadata-tests edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=wildfly.feature.pack.layer.tests.microprofile.telemetry.MicroProfileTelemetryLayerMetaDataTestCase#testClassInSdkCommonPackage
+        cd ~/soot
+        mvn edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=soot.jimple.toolkits.typing.TypingMinimizeTest#testJavaInterfaceTyping
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
