@@ -23,27 +23,27 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        git clone https://github.com/soot-oss/soot
+        git clone https://github.com/alibaba/Alink
         
     - name: Print latest commit
       run: |
-        cd ~/soot
+        cd ~/Alink
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/soot
-        mvn clean install -DskipTests -am
+        cd ~/Alink
+        mvn clean install -DskipTests -pl core -am
         
     - name: Run core tests
       run: |
-        cd ~/soot
-        mvn test -Dtest=soot.jimple.toolkits.typing.TypingMinimizeTest#testJavaInterfaceTyping
+        cd ~/Alink
+        mvn -pl core test -Dtest=com.alibaba.alink.operator.common.similarity.dataConverter.MinHashModelDataConverterTest#testJaccard
         
     - name: Run NonDex tests
       run: |
-        cd ~/soot
-        mvn edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=soot.jimple.toolkits.typing.TypingMinimizeTest#testJavaInterfaceTyping
+        cd ~/Alink
+        mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.alibaba.alink.operator.common.similarity.dataConverter.MinHashModelDataConverterTest#testJaccard
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
