@@ -23,28 +23,28 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        git clone https://github.com/twitter-archive/distributedlog
+        git clone https://github.com/apache/pinot
         
     - name: Print latest commit
       run: |
-        cd ~/distributedlog
+        cd ~/pinot
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/distributedlog
-        mvn clean install -DskipTests -pl distributedlog-core -am
+        cd ~/pinot
+        mvn clean install -DskipTests -pl pinot-core -am
         
     - name: Run core tests
       run: |
-        cd ~/distributedlog
-        mvn -pl distributedlog-core test -Dtest=com.twitter.distributedlog.TestAsyncReaderWriter#testSimpleAsyncReadWriteStartEmptyFactory
+        cd ~/pinot
+        mvn -pl pinot-core test -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#testNoRecordsIndexedRowMajorSegmentBuilder
 
 
     - name: Run NonDex tests
       run: |
-        cd ~/distributedlog
-        mvn -pl distributedlog-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=100 -Dtest=com.twitter.distributedlog.TestAsyncReaderWriter#testSimpleAsyncReadWriteStartEmptyFactory
+        cd ~/pinot
+        mvn -pl pinot-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=100 -Dtest=org.apache.pinot.realtime.converter.RealtimeSegmentConverterTest#testNoRecordsIndexedRowMajorSegmentBuilder
 
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
