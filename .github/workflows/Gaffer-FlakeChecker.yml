@@ -43,7 +43,7 @@ jobs:
     - name: Run NonDex tests
       run: |
         cd ~/Gaffer
-        mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
+        mvn -pl core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=100 -Dtest=cz.habarta.typescript.generator.TaggedUnionsTest#testTaggedUnionsWithInterfaces
 
       
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
