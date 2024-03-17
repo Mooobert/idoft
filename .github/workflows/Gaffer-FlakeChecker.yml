@@ -23,27 +23,27 @@ jobs:
     - name: Clone flaky test Repository
       run: |
         cd ~
-        git clone https://github.com/twitter-archive/distributedlog
+        git clone https://github.com/baidu/uid-generator
         
     - name: Print latest commit
       run: |
-        cd ~/distributedlog
+        cd ~/uid-generator
         git rev-parse HEAD
         
     - name: Install testing dependencies
       run: |
-        cd ~/distributedlog
-        mvn clean install -DskipTests -pl distributedlog-core -am
+        cd ~/uid-generator
+        mvn clean install -DskipTests -am
         
     - name: Run core tests
       run: |
-        cd ~/distributedlog
-        mvn -pl distributedlog-core test -Dtest=com.twitter.distributedlog.TestAsyncReaderLock#testReaderLockBackgroundReaderLockAcquire
+        cd ~/uid-generator
+        mvn test -Dtest=com.baidu.fsg.uid.DefaultUidGeneratorTest#testParallelGenerate
 
     - name: Run NonDex tests
       run: |
-        cd ~/distributedlog
-        mvn -pl distributedlog-core edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.twitter.distributedlog.TestAsyncReaderLock#testReaderLockBackgroundReaderLockAcquire
+        cd ~/uid-generator
+        mvn edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.baidu.fsg.uid.DefaultUidGeneratorTest#testParallelGenerate
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
