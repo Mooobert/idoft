@@ -43,7 +43,7 @@ jobs:
     - name: Run NonDex tests
       run: |
         cd ~/DataflowTemplates
-        mvn -pl v1 edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexRuns=75 -Dtest=com.google.cloud.teleport.bigtable.CassandraRowMapperFnTest#testType1UUIDColumn
+        mvn -pl v1 edu.illinois:nondex-maven-plugin:2.1.1:nondex -DnondexSeed=4000034 -Dtest=com.google.cloud.teleport.bigtable.CassandraRowMapperFnTest#testType1UUIDColumn
         
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
